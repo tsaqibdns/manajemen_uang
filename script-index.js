@@ -2,55 +2,56 @@
         const API_URL = 'https://script.google.com/macros/s/AKfycbx4h4xs_GqrOJ03b9wM5aNQTgrhCOS3pltU7Ru0u63zLe2do11wnEtrYYpxiis3e0lv/exec'; // Ganti dengan URL Google Apps Script Anda
         
         async function saveTransactionToDatabase(transaction) {
+            // Log transaksi untuk debugging
             console.log("Sending transaction:", transaction);
+        
+            // Validasi URL API
+            if (!API_URL) {
+                console.error("API URL is not defined");
+                return;
+            }
+        
             try {
+                // Kirim POST request ke API
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json', // Format data JSON
                     },
                     body: JSON.stringify({ 
-                        action: 'add', 
-                        ...transaction 
+                        action: 'add', // Aksi yang dilakukan
+                        ...transaction  // Spread operator untuk menambahkan data transaksi
                     }),
                 });
+        
+                // Cek apakah status HTTP sukses
+                if (!response.ok) {
+                    const errorText = await response.text(); // Ambil pesan error dari response
+                    console.error("HTTP Error:", response.status, errorText);
+                    throw new Error(`Gagal menyimpan transaksi. HTTP status: ${response.status}`);
+                }
+        
+                // Parse response ke JSON
                 const result = await response.json();
+        
+                // Log hasil response dari API
                 console.log("API Response:", result);
-                if (!response.ok) {
-                    throw new Error('Gagal menyimpan transaksi');
+        
+                // Tambahkan validasi jika API memiliki response error
+                if (result.status !== 'success') {
+                    console.error("API Error:", result.message || "Unknown error");
+                    throw new Error(result.message || 'Terjadi kesalahan pada API');
                 }
+        
+                // Jika berhasil
+                return result;
             } catch (error) {
-                console.error("Error:", error.message);
+                // Log error untuk debugging
+                console.error("Error while saving transaction:", error.message);
             }
         }
         
-
-        async function saveTransactionToDatabase(transaction) {
-            console.log("Sending transaction:", transaction); // Debugging untuk memantau data
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        action: 'add',   // Ini memberi tahu API bahwa ini adalah aksi tambah
-                        ...transaction   // Spread operator untuk menyertakan semua atribut transaksi
-                    }),
-                });
         
-                const result = await response.json(); // Ambil respon dari API
-                console.log("API Response:", result); // Debugging respon API
-        
-                if (!response.ok) {
-                    throw new Error('Gagal menyimpan transaksi');
-                }
-            } catch (error) {
-                console.error("Error:", error.message); // Debugging jika ada error
-            }
-        }
-        
-
         async function deleteTransaction(timestamp) {
             try {
                 const response = await fetch(API_URL, {
