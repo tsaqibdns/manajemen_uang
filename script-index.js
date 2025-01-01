@@ -1,7 +1,8 @@
         const API_KEY = 'https://script.google.com/macros/s/AKfycbx4h4xs_GqrOJ03b9wM5aNQTgrhCOS3pltU7Ru0u63zLe2do11wnEtrYYpxiis3e0lv/exec';
         const API_URL = 'https://script.google.com/macros/s/AKfycbx4h4xs_GqrOJ03b9wM5aNQTgrhCOS3pltU7Ru0u63zLe2do11wnEtrYYpxiis3e0lv/exec'; // Ganti dengan URL Google Apps Script Anda
-
+        
         async function saveTransactionToDatabase(transaction) {
+            console.log("Sending transaction:", transaction);
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -13,13 +14,42 @@
                         ...transaction 
                     }),
                 });
+                const result = await response.json();
+                console.log("API Response:", result);
                 if (!response.ok) {
                     throw new Error('Gagal menyimpan transaksi');
                 }
             } catch (error) {
-                console.error(error.message);
+                console.error("Error:", error.message);
             }
         }
+        
+
+        async function saveTransactionToDatabase(transaction) {
+            console.log("Sending transaction:", transaction); // Debugging untuk memantau data
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        action: 'add',   // Ini memberi tahu API bahwa ini adalah aksi tambah
+                        ...transaction   // Spread operator untuk menyertakan semua atribut transaksi
+                    }),
+                });
+        
+                const result = await response.json(); // Ambil respon dari API
+                console.log("API Response:", result); // Debugging respon API
+        
+                if (!response.ok) {
+                    throw new Error('Gagal menyimpan transaksi');
+                }
+            } catch (error) {
+                console.error("Error:", error.message); // Debugging jika ada error
+            }
+        }
+        
 
         async function deleteTransaction(timestamp) {
             try {
