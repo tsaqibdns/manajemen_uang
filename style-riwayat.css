@@ -1,0 +1,95 @@
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            padding: 1rem;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .filter {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .filter div {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .history {
+            margin-top: 2rem;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #ddd;
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item span {
+            display: block;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .history-actions button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .history-actions .edit {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .history-actions .delete {
+            background-color: #f44336;
+            color: #fff;
+        }
