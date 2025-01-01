@@ -1,6 +1,11 @@
         const API_KEY = 'https://script.google.com/macros/s/AKfycbx4h4xs_GqrOJ03b9wM5aNQTgrhCOS3pltU7Ru0u63zLe2do11wnEtrYYpxiis3e0lv/exec';
         const API_URL = 'https://script.google.com/macros/s/AKfycbx4h4xs_GqrOJ03b9wM5aNQTgrhCOS3pltU7Ru0u63zLe2do11wnEtrYYpxiis3e0lv/exec'; // Ganti dengan URL Google Apps Script Anda
         
+        let saldo = 2000000;
+        const saldoDiv = document.getElementById('saldo');
+        const form = document.getElementById('transaction-form');
+        const historyDiv = document.getElementById('history');
+
         async function saveTransactionToDatabase(transaction) {
             // Log transaksi untuk debugging
             console.log("Sending transaction:", transaction);
@@ -101,12 +106,6 @@
             loadTransactions();
             updateSaldo();
         });
-
-
-        let saldo = 2000000;
-        const saldoDiv = document.getElementById('saldo');
-        const form = document.getElementById('transaction-form');
-        const historyDiv = document.getElementById('history');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
